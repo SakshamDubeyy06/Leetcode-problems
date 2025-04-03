@@ -1,0 +1,33 @@
+#define MAX 10000
+
+int stack[MAX];
+int top = -1;
+
+void push(char ele){
+    if(top==MAX-1){
+        return;
+    }
+    stack[++top]=ele;
+}
+char pop(){
+    if(top >= 0) return stack[top--];
+    return '\0';
+}
+bool isValid(char* s) {
+    top = -1;
+    for(int i = 0; s[i]!=0; i++){
+        char ele = s[i];
+        if (ele == '(' || ele == '{' || ele == '['){
+        push(ele);
+       }
+       else {
+            if (top == -1) return false;
+            char seek= pop();
+            if ((ele == ')' && seek != '(') ||(ele == '}' && seek != '{') ||
+            (ele == ']' && seek != '[')) {
+                return false; 
+            }
+       }
+    }
+    return top == -1;
+}
